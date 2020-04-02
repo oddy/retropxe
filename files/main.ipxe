@@ -1,0 +1,216 @@
+#!ipxe
+echo *** Main.ipxe starting...
+
+# -------- Serial:iscsi-label map --------
+set serial ${smbios/serial:string}
+
+# --- Gigabyte leave the serial on their mobos as "To be filled by O.E.M." because they are fucking assholes, fallback to MAC addr ---
+iseq ${serial:base64} VG8gYmUgZmlsbGVkIGJ5IE8uRS5NLg== && set serial ${netX/mac} ||     
+
+# --- Home machines ---
+iseq ${serial} fc:aa:14:94:f2:cd && set label ninja ||                                  
+iseq ${serial} 2CE22013D2 && set label katieprobook ||
+
+# --- Retrolan Older Dell Quakebooks ---
+iseq ${serial} H6BSS1S && set label d520   ||
+iseq ${serial} JN3GF3J && set label d530aa ||
+iseq ${serial} 1680Z3J && set label d530bb ||
+
+# --- Retrolan Newer Dell Quakebooks ---
+iseq ${serial} FP7N3N1 && set label e5410  ||
+iseq ${serial} 5BFH42S && set label e6400  ||
+iseq ${serial} GRWGYN1 && set label e6410  ||
+
+# iseq ${serial} 3MQRL1S && set label d820   ||         # 'logan computer'
+# iseq ${serial} BGPHD1S && set label d800   ||         # ewasted
+# iseq ${serial} HKDGC1S && set label d600   ||         # ewasted
+
+
+# --- Quasar NUCs etc ---
+iseq ${serial} G6BN81000N1H && set label nuc00   ||
+
+# -------- Globals --------
+# console --x 1024 --y 768                  # works, looks good on d530bb
+set imounted no
+#set iip ${next-server}                      # iSCSI server IP
+set iip 192.168.69.123                      # testing with beau 2016 VM - iscsi server different to us
+set rooturl http://${next-server}           # Note: next-server is us (box running tiny PXE server) 
+
+
+# -------- Menu --------
+
+:menu
+menu Quasar PXE Toolkit Boot Menu
+item --gap -- Machine serial# : ${serial}
+item --gap -- iSCSI drive named '${label}' - mounted: ${imounted}
+item --gap -- ------- Boot ------
+item bootiscsi      Boot from iSCSI drive
+item bootphys       Boot from first physical drive
+item reboot         Reboot
+item --gap -- ------- iSCSI -------
+item mountiscsi     Mount iSCSI drive (for installs)
+item --gap -- ------- Install ------
+item installwin7x86 Install win7x86
+item install2k6     Install server2016
+item install10_ltsc Install win10 Ent LTSC
+item install10_pro  Install win10 Pro/Home (2017 ver)
+item --gap -- ------- Tools ------------
+item pmagic         Partition Magic (64bit, 1G+ RAM needed)
+item hdt            Hardware Detection Tool (HDT)
+item clonez         Clonezilla (console mode)
+item shell          iPXE shell
+item config         iPXE config settings
+
+choose target && goto ${target}
+#choose --default shell --timeout 15000 target && goto ${target}
+
+:restart
+set menu-timeout 0
+goto menu
+
+
+# -------- Boot --------
+
+:bootiscsi
+echo -- ----[ Booting from iSCSI drive ]----
+isset ${label} || goto requestlabel
+set initiator-iqn ${label}
+sanboot iscsi:${iip}::::${label}      && goto restart || goto iscsifail
+
+
+:bootphys
+echo -- ----[ Booting from first physical drive ]----
+sanboot --no-describe --drive 0x80    && goto restart || goto bootfail
+
+
+# -------- iSCSI --------
+
+:mountiscsi
+iseq ${imounted} YES && goto restart ||
+echo -- ----[ Mounting iSCSI drive ]----
+isset ${label} || goto requestlabel
+set gateway 0.0.0.0
+set netX/gateway 0.0.0.0
+set initiator-iqn ${label}
+set keep-san 1
+sanhook iscsi:${iip}::::${label}     || goto iscsifail
+set imounted YES
+goto restart
+
+
+# ------- Windows Installers -------
+
+:installwin7x86
+set arch x86
+set url ${rooturl}/win7x86
+goto wimboot
+
+:install2k6
+set url ${rooturl}/svr2016
+goto wimboot
+
+:install10_ltsc
+set url ${rooturl}/win10_ltsc
+goto wimboot
+
+:install10_pro
+set url ${rooturl}/win10_pro
+goto wimboot
+
+
+# ------- WIMboot -------
+
+:wimboot 
+echo -- ----[ Fetching WIMboot & BCD init files ]----
+kernel ${rooturl}/wimboot__260              # Note: wimboot 2.6.0 makes the bat and ini patch-in work, it doesnt work on 2.5.2
+initrd ${rooturl}/winpeshl.ini                  winpeshl.ini
+initrd ${rooturl}/ipbats/${next-server}.bat     server.bat
+initrd ${url}/install.bat                       install.bat
+initrd ${url}/iso/boot/bcd                      BCD
+initrd ${url}/iso/boot/boot.sdi                 boot.sdi
+initrd ${url}/iso/sources/boot.wim              boot.wim
+
+echo -- ----[ Starting wimboot ]----
+boot                                   && goto restart || goto bootfail
+
+
+# -------- Tools --------
+
+# Note: the fetch trick may not work on UEFI systems ?
+
+:clonez
+set url ${rooturl}/clonezilla
+kernel ${url}/vmlinuz fetch=${url}/filesystem.squashfs boot=live debug union=overlay username=user config components noswap edd=on nomodeset enforcing=0 noeject  locales= keyboard-layouts= ocs_live_run="ocs-live-general" ocs_live_extra_param="" ocs_live_batch="no" vga=788 ip= net.ifnames=0  splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1
+initrd ${url}/initrd.img
+boot                                   && goto restart || goto bootfail
+# Note: check out the fetch= parameter, thats what made getting the squashfs filesystem and 'chaining' to it after the initrd, to work!
+
+
+:hdt
+set url ${rooturl}/hdt
+kernel ${url}/hdt.c32
+initrd ${url}/pci.ids
+boot                                   && goto restart || goto bootfail
+
+
+# Note: this works (on 4Gig D530BB)  if you choose RAM 64bit. the 32bit one doesn't. Also you need gigz of ram.
+# Note: also works with RAM 64bit.
+# Note: takes AGES for linux to boot its ass up tho.
+:pmagic
+set url ${rooturl}/pmagic
+kernel ${url}/memdisk iso raw vmalloc=1024M
+initrd ${url}/pmagic_2018_04_30.iso
+boot                                   && goto restart || goto bootfail
+# run the pm2pxe.sh on a linux box and it will make the files.cgz that we can initrd=. 
+# only worth it if it will boot a lot faster. Which it probably wont.
+
+
+
+# -------- Helpers --------
+
+:shell
+echo *** Type exit to get the back to the menu.
+shell
+goto restart
+
+
+:config
+config
+goto restart
+
+
+:iscsifail
+echo *** Likely the drive is not yet set up on the server.
+:bootfail
+echo *** Booting failed, returning to menu.
+sleep 5
+goto menu                              # Note menu not restart - this keeps the timeout so we can cycle trying the iscsi boot
+
+
+:reboot
+reboot
+
+
+:requestlabel
+echo *** Error: unknown machine serial# '${serial}'
+echo *** Please ask your admin to provision an iSCSI drive
+echo -n *** Please enter a name for your iSCSI drive > && read label 
+params
+param serial ${serial}
+param label ${label}
+imgfetch ${rooturl}/register.txt##params ||
+echo *** Waiting 5 sec for admin to set up drive, then rebooting.
+echo *** NOTE: if the menu doesn't show a name for your iSCSI drive, 
+echo *** NOTE: keep rebooting until it does.
+sleep 5
+goto reboot
+
+
+
+# -------- Notes --------
+
+# Note: there is an iscsi timeout or something when first starting up the windows installer.
+# internet guy says its "unavoidable"
+#   This will display a login screen then do CHAP auth with the iscsi target!
+#   login
+#   sanboot iscsi:10.0.4.1:::1:iqn.2010-04.org.ipxe.dolphin:storage

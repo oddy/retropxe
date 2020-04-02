@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <settings pass="windowsPE">
+
+        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UILanguage>en-us</UILanguage>
+            <UserLocale>en-us</UserLocale>
+            <InputLocale>en-us</InputLocale>
+            <SystemLocale>en-us</SystemLocale>            
+        </component>
+
+        <component name="Microsoft-Windows-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+            <ImageInstall>
+                <OSImage>
+                    <InstallFrom>
+                        <MetaData wcm:action="add">   
+                            <Key>/IMAGE/NAME</Key>
+                            <Value>Windows 7 Professional</Value>
+                        </MetaData>
+                    </InstallFrom>
+                </OSImage>
+            </ImageInstall>
+
+            <UserData>
+                <ProductKey>
+                    <Key>HYF8J-CVRMY-CM74G-RPHKF-PW487</Key>   <!-- from iso/sources/product.ini -->
+                    <WillShowUI>OnError</WillShowUI>                    
+                </ProductKey>
+                <FullName>Retro Lan</FullName>
+                <Organization>Retro Lan</Organization>
+                <AcceptEula>true</AcceptEula>
+            </UserData>
+
+            <EnableNetwork>true</EnableNetwork>
+            <EnableFirewall>false</EnableFirewall>
+
+        </component>
+    </settings>
+
+
+    <settings pass="specialize">
+
+        <!-- <component name="Microsoft-Windows-Deployment" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <RunSynchronous>
+                <RunSynchronousCommand wcm:action="add">
+                    <Path>net user administrator /active:yes</Path>
+                    <Order>1</Order>
+                </RunSynchronousCommand>
+            </RunSynchronous>  
+        </component>  -->
+
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <ShowWindowsLive>false</ShowWindowsLive>
+        </component>
+        <component name="Microsoft-Windows-IE-InternetExplorer" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <FilterLevel>High</FilterLevel>
+            <ShowInformationBar>false</ShowInformationBar>
+            <DisableAccelerators>true</DisableAccelerators>
+            <DisableDevTools>true</DisableDevTools>
+            <DisableFirstRunWizard>true</DisableFirstRunWizard>
+            <DisableOOBAccelerators>true</DisableOOBAccelerators>
+            <Home_Page>https://retrolan.nz</Home_Page>
+            <SearchScopes>
+                <Scope wcm:action="add">
+                    <ScopeDefault>true</ScopeDefault>
+                    <ScopeDisplayName>Google</ScopeDisplayName>
+                    <ScopeKey>SearchProvider1</ScopeKey>
+                    <ScopeUrl>http://www.google.com.au/search?q={searchTerms}</ScopeUrl>
+                </Scope>
+            </SearchScopes>
+        </component>
+
+        <component name="Microsoft-Windows-ErrorReportingCore" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DisableWER>1</DisableWER>
+        </component>
+    </settings>
+
+
+    <settings pass="oobeSystem">
+
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>en-us</InputLocale>
+            <SystemLocale>en-us</SystemLocale>
+            <UILanguage>en-us</UILanguage>
+            <UserLocale>en-us</UserLocale>
+        </component>
+
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <OOBE>
+                <ProtectYourPC>3</ProtectYourPC>
+                <NetworkLocation>Home</NetworkLocation>
+                <SkipMachineOOBE>false</SkipMachineOOBE>
+                <SkipUserOOBE>false</SkipUserOOBE>
+                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+            </OOBE>
+            <UserAccounts>
+                <LocalAccounts>
+                    <LocalAccount wcm:action="add">
+                        <Password>
+                            <Value>retro</Value>
+                            <PlainText>true</PlainText>
+                        </Password>
+                        <Name>retro</Name>
+                        <Group>Administrators</Group>
+                    </LocalAccount>
+                </LocalAccounts>
+                <AdministratorPassword>
+                    <Value>retro</Value>
+                    <PlainText>true</PlainText>
+                </AdministratorPassword>
+            </UserAccounts>
+            
+            <TimeZone>New Zealand Standard Time</TimeZone>
+        </component>
+    </settings>
+</unattend>

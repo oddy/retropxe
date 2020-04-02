@@ -1,0 +1,9 @@
+c32 apps from syslinux 3.86 are compatible with iPXE and just work.
+That's where we got this HDT.
+Todo: we have to chain to syslinux to get modern syslinux stuff to work most likely.
+
+Todo: it doesnt seem to like the pci.ids file we are supplying. Probably because windows line endings? renamed to _pci.ids and stole another pci.ids from oddy.cc linux box and that WORKED.
+
+"Syslinux is extensible via COMBOOT modules, which can be written in C or in assembly. [-4.xx] Syslinux (prior to version 5.00) supports both 16- and 32bit COMBOOT modules; 16bit COMBOOT modules implement a subset of the MS-DOS ".COM" API, and can thus be written to be runnable under DOS if desired.
+[5.00+] Since version 5.00, support for 16bit COMBOOT modules has been dropped, and c32 modules switched from the COM32 object format to ELF."
+

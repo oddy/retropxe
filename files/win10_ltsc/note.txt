@@ -1,0 +1,2 @@
+make a folder 'iso' here. 
+unzip your windows iso into it. so that the boot, efi, source, support etc folders are in the iso folder.

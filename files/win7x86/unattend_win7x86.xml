@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <settings pass="specialize">
+        <component name="Microsoft-Windows-ErrorReportingCore" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DisableWER>1</DisableWER>
+        </component>
+        <component name="Microsoft-Windows-IE-InternetExplorer" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <EnableLinksBar>false</EnableLinksBar>
+            <DisableWelcomePage>true</DisableWelcomePage>
+            <DisableOOBAccelerators>true</DisableOOBAccelerators>
+            <DisableFirstRunWizard>true</DisableFirstRunWizard>
+            <FilterLevel>Low</FilterLevel>
+            <DisableAccelerators>true</DisableAccelerators>
+            <ShowInformationBar>false</ShowInformationBar>
+            <Home_Page>https://retrolan.nz</Home_Page>
+            <ShowMenuBar>true</ShowMenuBar>
+            <SuggestedSitesEnabled>false</SuggestedSitesEnabled>
+            <TrustedSites>https://retrolan.nz</TrustedSites>
+            <Window_Title_CN>RETRO</Window_Title_CN>
+        </component>
+        <component name="Microsoft-Windows-Printing-Spooler-Core" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <RemoveMXDW>1</RemoveMXDW>
+        </component>
+        <component name="Microsoft-Windows-Security-Licensing-SLC-UX" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SkipAutoActivation>true</SkipAutoActivation>
+        </component>
+        <component name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SkipAutoActivation>true</SkipAutoActivation>
+        </component>
+        <component name="Microsoft-Windows-SQMApi" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <CEIPEnabled>0</CEIPEnabled>
+        </component>
+        <component name="Networking-MPSSVC-Svc" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DisableStatefulFTP>true</DisableStatefulFTP>
+            <DisableStatefulPPTP>true</DisableStatefulPPTP>
+            <DomainProfile_DisableNotifications>true</DomainProfile_DisableNotifications>
+            <DomainProfile_EnableFirewall>false</DomainProfile_EnableFirewall>
+            <PrivateProfile_DisableNotifications>true</PrivateProfile_DisableNotifications>
+            <PrivateProfile_EnableFirewall>false</PrivateProfile_EnableFirewall>
+            <PublicProfile_DisableNotifications>true</PublicProfile_DisableNotifications>
+            <PublicProfile_EnableFirewall>false</PublicProfile_EnableFirewall>
+        </component>
+        <component name="Security-Malware-Windows-Defender" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DisableAntiSpyware>true</DisableAntiSpyware>
+        </component>
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <RegisteredOrganization>Retrolan</RegisteredOrganization>
+            <ShowWindowsLive>false</ShowWindowsLive>
+            <ComputerName>*</ComputerName>
+        </component>
+    </settings>
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>en-us</InputLocale>
+            <SystemLocale>en-us</SystemLocale>
+            <UILanguage>en-us</UILanguage>
+            <UserLocale>en-us</UserLocale>
+        </component>
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <AutoLogon>
+                <Password>
+                    <Value>cgBlAHQAcgBvAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+                    <PlainText>false</PlainText>
+                </Password>
+                <Username>retro</Username>
+                <Enabled>true</Enabled>
+            </AutoLogon>
+            <OOBE>
+                <HideEULAPage>true</HideEULAPage>
+                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+                <NetworkLocation>Home</NetworkLocation>
+                <ProtectYourPC>3</ProtectYourPC>
+                <SkipMachineOOBE>false</SkipMachineOOBE>
+                <SkipUserOOBE>false</SkipUserOOBE>
+            </OOBE>
+            <UserAccounts>
+                <AdministratorPassword>
+                    <Value>cgBlAHQAcgBvAEEAZABtAGkAbgBpAHMAdAByAGEAdABvAHIAUABhAHMAcwB3AG8AcgBkAA==</Value>
+                    <PlainText>false</PlainText>
+                </AdministratorPassword>
+                <LocalAccounts>
+                    <LocalAccount wcm:action="add">
+                        <Password>
+                            <Value>cgBlAHQAcgBvAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+                            <PlainText>false</PlainText>
+                        </Password>
+                        <Name>retro</Name>
+                        <Group>Administrators</Group>
+                    </LocalAccount>
+                </LocalAccounts>
+            </UserAccounts>
+            <WindowsFeatures>
+                <ShowMediaCenter>false</ShowMediaCenter>
+                <ShowWindowsMail>false</ShowWindowsMail>
+                <ShowWindowsMediaPlayer>false</ShowWindowsMediaPlayer>
+            </WindowsFeatures>
+            <ShowWindowsLive>false</ShowWindowsLive>
+            <RegisteredOwner></RegisteredOwner>
+            <RegisteredOrganization></RegisteredOrganization>
+            <StartPanelOff>true</StartPanelOff>
+            <TimeZone>New Zealand Standard Time</TimeZone>
+        </component>
+    </settings>
+    <settings pass="windowsPE">
+        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SystemLocale>en-us</SystemLocale>
+            <UserLocale>en-us</UserLocale>
+            <UILanguage>en-us</UILanguage>
+            <InputLocale>en-us</InputLocale>
+        </component>
+        <component name="Microsoft-Windows-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <ComplianceCheck>
+                <DisplayReport>OnError</DisplayReport>
+            </ComplianceCheck>
+            <ImageInstall>
+                <OSImage>
+                    <InstallFrom>
+                        <MetaData wcm:action="add">
+                            <Key>/IMAGE/NAME</Key>
+                            <Value>Windows 7 Professional</Value>
+                        </MetaData>
+                    </InstallFrom>
+                </OSImage>
+            </ImageInstall>
+            <UserData>
+                <ProductKey>
+                    <Key>HYF8J-CVRMY-CM74G-RPHKF-PW487</Key>
+                    <WillShowUI>OnError</WillShowUI>
+                </ProductKey>
+                <AcceptEula>true</AcceptEula>
+                <FullName>Retro Lan</FullName>
+                <Organization>Retro Lan</Organization>
+            </UserData>
+            <EnableFirewall>false</EnableFirewall>
+            <EnableNetwork>true</EnableNetwork>
+        </component>
+    </settings>
+    <cpi:offlineImage cpi:source="catalog://fleet/win7x86_iso/sources/install_windows 7 professional.clg" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+</unattend>

@@ -1,0 +1,4 @@
+This is the 'stable' version, based off of debian live
+
+ALso you need filesystem.squashfs, get it off oddy it wont fit in githubs git, being 229MB
+
